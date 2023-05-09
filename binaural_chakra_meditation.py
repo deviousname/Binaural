@@ -5,7 +5,7 @@ from pydub.generators import Sine
 from pydub.playback import play
 
 class BinauralPlaylist:
-    def __init__(self, frequency_pairs, play_time=600, transition_time=5, amplitude=0.5):
+    def __init__(self, frequency_pairs, play_time=600, transition_time=5, amplitude=0.3):
         self.frequency_pairs = frequency_pairs
         self.play_time = play_time
         self.transition_time = transition_time
@@ -53,15 +53,27 @@ class BinauralPlaylist:
 schumann_freq = 7.83
 
 # Define base frequencies
-base_frequencies = [396, 417, 528, 639, 741, 852, 963]
+solfeggio_frequencies = [396, 417, 528, 639, 741, 852, 963]
+chakra_frequencies = [194, 210, 261.63, 329.63, 392, 440, 480]
 
-# Lower the base frequencies and keep the Schumann frequency intact
-lowered_frequencies = [BinauralPlaylist.lower_octave(f, 2) for f in base_frequencies]
+# Choose the desired scale: 'solfeggio' or 'chakra'
+scale = 'chakra'
 
-# Calculate the frequency pairs based on the lowered base frequencies and the Schumann frequency
-frequency_pairs = [(f - schumann_freq / 2, f + schumann_freq / 2) for f in lowered_frequencies]
+# Choose whether to lower the chosen frequencies and how many octaves to lower
+lower_octave = True
+lower_octaves_by = 1
 
-# Create a playlist with a 10-minute duration and a 5-second transition between each beat
-playlist = BinauralPlaylist(frequency_pairs, play_time=600, transition_time=5)
+# Select the chosen frequencies based on the chosen scale
+chosen_frequencies = solfeggio_frequencies if scale == 'solfeggio' else chakra_frequencies
+
+# Lower the chosen frequencies if the lower_octave option is set
+if lower_octave:
+    chosen_frequencies = [BinauralPlaylist.lower_octave(f, lower_octaves_by) for f in chosen_frequencies]
+
+# Calculate the frequency pairs based on the chosen frequencies and the Schumann frequency
+frequency_pairs = [(f - schumann_freq / 2, f + schumann_freq / 2) for f in chosen_frequencies]
+
+# Create a playlist with a 5-minute duration, a 5-second transition between each beat and an amplitude of 0.3
+playlist = BinauralPlaylist(frequency_pairs, play_time=300, transition_time=5, amplitude=0.3)
 
 playlist.play()
