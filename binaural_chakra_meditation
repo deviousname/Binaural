@@ -58,7 +58,7 @@ frequency_pairs = [
 ]
 
 # Create a playlist with a 10-minute duration and a 5-second transition between each beat
-playlist = BinauralPlaylist(frequency_pairs, play_time=600, transition_time=1)
+playlist = BinauralPlaylist(frequency_pairs, play_time=600, transition_time=5)
 
 # Play the playlist
 playlist.play()
