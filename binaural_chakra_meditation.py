@@ -61,7 +61,7 @@ lowered_frequencies = [BinauralPlaylist.lower_octave(f, 2) for f in base_frequen
 # Calculate the frequency pairs based on the lowered base frequencies and the Schumann frequency
 frequency_pairs = [(f - schumann_freq / 2, f + schumann_freq / 2) for f in lowered_frequencies]
 
-# Create a playlist with a 20-second duration and a 10-second transition between each beat
-playlist = BinauralPlaylist(frequency_pairs, play_time=20, transition_time=10)
+# Create a playlist with a 10-minute duration and a 5-second transition between each beat
+playlist = BinauralPlaylist(frequency_pairs, play_time=600, transition_time=5)
 
 playlist.play()
